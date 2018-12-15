@@ -1,0 +1,16 @@
+{
+	"compilerOptions":{
+		"module":"es5",
+		"lib": ["es6","dom", "es5"],
+		"target":"es5",
+		"strict": true,
+		"noImplicitAny": true,
+		"noImplicitThis": false,
+		"removeComments":true,
+		"sourceMap": true,
+		"paths": {
+			"*": ["node_modules/"]
+		}
+	},
+	"exclude": ["node_modules"]
+}
