@@ -1,4 +1,4 @@
-import * as rx from 'rxjs'
+import { Observable, fromEvent } from 'rxjs'
 import fireStore from './fbConfig'
 
 
@@ -24,26 +24,34 @@ function renderCafe(doc:any){
     cafeList.appendChild(li);
 
     // deleting data
-    cross.addEventListener('click', (e:any) => {
-        let id = e.target.parentElement.getAttribute('data-id');
+    fromEvent(cross,"click")
+    .subscribe((e:any)=> {
+    	let id = e.target.parentElement.getAttribute('data-id');
         fireStore.collection('cafe').doc(id).delete()
-    });
+    })
 }
-
 // getting data
-fireStore.collection('cafe').orderBy('city').get().then((snapshot:any) => {
-    snapshot.docs.forEach((doc:any) => {
-        renderCafe(doc);
-    });
+const data:Observable<any> = Observable.create((obs:any) => {
+	fireStore.collection('cafe').orderBy('city').get().then((snapshot:any) => {
+		snapshot.docs.forEach((doc:any) => {
+	        obs.next(doc);
+	    });
+	});
 });
-
+// print data to html 
+data.subscribe((data:any) => {
+	renderCafe(data);
+},
+(err:any) => console.log("data error" + err)
+)
 // saving data
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
+fromEvent(form, "submit")
+.subscribe((e:any) => {
+	e.preventDefault();
     fireStore.collection('cafe').add({
         name: form.cafename.value,
         city: form.city.value
     });
     form.cafename.value = '';
     form.city.value = '';
-});
+})

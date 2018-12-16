@@ -5,16 +5,22 @@
   "main": "index.js",
   "author": "ahmednet2020",
   "license": "MIT",
+  "scripts": {
+    "start": "live-server ./public && gulp"
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
     "autoprefixer": "^9.4.2",
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
+    "cssnano": "^4.1.7",
     "gulp": "^4.0.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.1",
     "merge-stream": "^1.0.1",
     "tsify": "^4.0.1",
     "typescript": "^3.2.2",
