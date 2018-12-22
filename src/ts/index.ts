@@ -4,6 +4,7 @@ import fireStore from './fbConfig'
 
 const cafeList = document.querySelector('#cafe-list') as HTMLElement;
 const form = document.querySelector('#add-cafe-form') as HTMLFormElement;
+const search = document.querySelector('#search') as HTMLInputElement;
 
 // create element & render cafe
 function renderCafe(doc:any){
@@ -30,17 +31,23 @@ function renderCafe(doc:any){
         fireStore.collection('cafe').doc(id).delete()
     })
 }
-// getting data
+// real-time listener
 const data:Observable<any> = Observable.create((obs:any) => {
-	fireStore.collection('cafe').orderBy('city').get().then((snapshot:any) => {
-		snapshot.docs.forEach((doc:any) => {
-	        obs.next(doc);
-	    });
-	});
+    fireStore.collection('cafe').orderBy('name').onSnapshot(snapshot => {
+        let changes = snapshot.docChanges();
+        changes.map(change => {
+            obs.next(change);
+        });
+    });
 });
 // print data to html 
 data.subscribe((data:any) => {
-	renderCafe(data);
+   if(data.type == 'added'){
+        renderCafe(data.doc);
+    } else if (data.type == 'removed'){
+        let li = cafeList.querySelector('[data-id=' + data.doc.id + ']') as HTMLLIElement;
+        cafeList.removeChild(li);
+    }
 },
 (err:any) => console.log("data error" + err)
 )

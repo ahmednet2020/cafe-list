@@ -6,7 +6,7 @@
   "author": "ahmednet2020",
   "license": "MIT",
   "scripts": {
-    "start": "live-server ./public && gulp"
+    "server": "live-server ./public"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
