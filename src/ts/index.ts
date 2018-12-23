@@ -42,14 +42,14 @@ const data:Observable<any> = Observable.create((obs:any) => {
 });
 // print data to html 
 data.subscribe((data:any) => {
-   if(data.type == 'added'){
-        renderCafe(data.doc);
-    } else if (data.type == 'removed'){
-        let li = cafeList.querySelector('[data-id=' + data.doc.id + ']') as HTMLLIElement;
-        cafeList.removeChild(li);
-    }
-},
-(err:any) => console.log("data error" + err)
+       if(data.type == 'added'){
+            renderCafe(data.doc);
+        } else if (data.type == 'removed'){
+            let li = cafeList.querySelector('[data-id=' + data.doc.id + ']') as HTMLLIElement;
+            cafeList.removeChild(li);
+        }
+    },
+        (err:any) => console.log("data error" + err)
 )
 // saving data
 fromEvent(form, "submit")
